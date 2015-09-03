@@ -24,7 +24,7 @@ License
 -------
 For the GPL see the [LICENSE](LICENSE) file.
 
-rescale.py - Rescale IV data to another tempature
+rescale.py - Rescale IV data to another tempature <br />
 Copyright (C) 2015 Jan Luca Naumann
 
 This program is free software: you can redistribute it and/or modify
