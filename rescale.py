@@ -266,7 +266,7 @@ USAGE
         for lineinput in inputfile[args.skip:]:
             xvalues[2].append(abs(float(lineinput.split()[voltagecol].replace(",",".")) * xfactor))\
             
-            yvalues[2].append(abs(float(lineinput.split()[currentcol].replace(",",".")) * tempfactor * 1000000))
+            yvalues[2].append(abs(float(lineinput.split()[currentcol].replace(",",".")) * tempfactor * yfactor))
             
             xerr[2].append(0.0)
             yerr[2].append(0.0)
