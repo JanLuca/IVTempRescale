@@ -36,11 +36,7 @@ from time import sleep
 __all__ = []
 __version__ = 1.0
 __date__ = '2015-09-01'
-__updated__ = '2015-09-01'
-
-DEBUG = 0
-TESTRUN = 0
-PROFILE = 0
+__updated__ = '2015-09-03'
 
 class CLIError(Exception):
     '''Generic exception to raise and log different fatal errors.'''
@@ -294,30 +290,6 @@ USAGE
         return 2
 
 if __name__ == "__main__":
-    if DEBUG:
-        sys.argv.append("-g 1.12")
-        sys.argv.append("/home/iwsatlas1/naumann/Documents/CIS-Productions/BATCH_312967/BARE_LUB/WAFER12/STD2_1.3e16_40C_2days_Anneling/IV_STD2_1.3e16_40C_2days_Anneling_150828115743.dat")
-        sys.argv.append("/home/iwsatlas1/naumann/Documents/CIS-Productions/BATCH_312967/BARE_LUB/WAFER12/STD2_1.3e16_25C_2days_Anneling/IV_STD2_1.3e16_25C_2days_Anneling_150828125301.dat")
-        sys.argv.append("-25")
-        sys.argv.append("Test")
-        sys.argv.append("Label_164b46v4v5v4v")
-        sys.argv.append("Label_2")
-        sys.argv.append("Label_3")
-    if TESTRUN:
-        import doctest
-        doctest.testmod()
-    if PROFILE:
-        import cProfile
-        import pstats
-        profile_filename = 'rescale.test2_profile.txt'
-        cProfile.run('main()', profile_filename)
-        statsfile = open("profile_stats.txt", "wb")
-        p = pstats.Stats(profile_filename, stream=statsfile)
-        stats = p.strip_dirs().sort_stats('cumulative')
-        stats.print_stats()
-        statsfile.close()
-        sys.exit(0)
-    
     if len(sys.argv) <= 1:
         sys.argv.append("-h")
     sys.exit(main())
