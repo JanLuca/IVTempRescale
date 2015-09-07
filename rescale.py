@@ -34,9 +34,9 @@ from array import array
 from time import sleep
 
 __all__ = []
-__version__ = 1.0
+__version__ = 1.1
 __date__ = '2015-09-01'
-__updated__ = '2015-09-03'
+__updated__ = '2015-09-07'
 
 class CLIError(Exception):
     '''Generic exception to raise and log different fatal errors.'''
