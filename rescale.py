@@ -179,6 +179,7 @@ USAGE
         parser.add_argument('-g', dest='gap', help="Energy gap of Si (in eV) [default: %(default)s]", default="1.12", metavar='ENERGY')
         parser.add_argument('-t', dest='intemp', help="Tempature (in C) of measurement in input file [default: %(default)s]", default="-40", metavar='TEMPATURE')
         parser.add_argument('-o', dest='outputdir', action=writeable_dir, help="Directory for the output files (e.g. plots, raw data) [default: Name of input file]", metavar='OUTPUTDIR')
+        parser.add_argument('-s', dest='savefile', help="Output file for rescaled data (will be overwritten) [default: None]", metavar='FILE', type=argparse.FileType('w'))
         parser.add_argument('--skip', dest='skip', help="Lines to skip at start of input files [default: %(default)s]", metavar='N', default=4, type=int)
         parser.add_argument('--voltage', dest='voltagecol', help="Column with data for voltage [default: %(default)s]", metavar='N', default=0, type=int)
         parser.add_argument('--voltagedev', dest='voltagedevcol', help="Column with data for voltage deviation [default: not used]", metavar='N', default=-1, type=int)
@@ -221,6 +222,11 @@ USAGE
             savedir = os.path.splitext(savedir)[0]
         else:
             savedir = args.outputdir
+            
+        if args.savefile != None:
+            rescfile = args.savefile
+        else:
+            rescfile = None
         
         # Set tempature and gap
         intemp = float(args.intemp.replace(",",".")) + 273.15
@@ -264,12 +270,19 @@ USAGE
                 yerr[1].append(0.0)
                         
         for lineinput in inputfile[args.skip:]:
-            xvalues[2].append(abs(float(lineinput.split()[voltagecol].replace(",",".")) * xfactor))\
+            xval = float(lineinput.split()[voltagecol].replace(",","."))
+            yval = float(lineinput.split()[currentcol].replace(",",".")) * tempfactor
             
-            yvalues[2].append(abs(float(lineinput.split()[currentcol].replace(",",".")) * tempfactor * yfactor))
-            
+            xvalues[2].append(abs(xval * xfactor))
+            yvalues[2].append(abs(yval * yfactor))
             xerr[2].append(0.0)
             yerr[2].append(0.0)
+            
+            if rescfile != None:
+                rescfile.write(xval.__str__() + " 0.0 " + yval.__str__() + " 0.0\n")
+            
+        if rescfile != None:
+            rescfile.close()
                 
         plottitle = [args.inputlabel, args.comparelabel, args.rescalelabel]
         
